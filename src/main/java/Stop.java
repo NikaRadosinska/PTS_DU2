@@ -7,15 +7,16 @@ public class Stop {
     private Optional<LineName> reachableVia;
     private Vector<LineName> lines;
 
-    public Stop(StopName name){
+    public Stop(StopName name, Vector<LineName> lines){
+        this.name = new StopName(name);
+        this.lines = lines;
+    }
+
+    public Stop(String name, Vector<LineName> lines){
         this.name = new StopName(name);
     }
 
-    public Stop(String name){
-        this.name = new StopName(name);
-    }
-
-    public StopName getName(){
+    public StopName getStopName(){
         return name;
     }
 
@@ -30,18 +31,5 @@ public class Stop {
 
     public Vector<LineName> getLines() {
         return lines;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Stop stop = (Stop) o;
-        return name.equals(stop.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, reachableAt, reachableVia, lines);
     }
 }

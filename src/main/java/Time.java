@@ -15,8 +15,8 @@ public class Time {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        int time1 = (Integer) o;
-        return time == time1;
+        Time time1 = (Time) o;
+        return time == time1.time;
     }
 
     @Override

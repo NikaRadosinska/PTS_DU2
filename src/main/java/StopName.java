@@ -14,8 +14,8 @@ public class StopName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        String stopName = (String) o;
-        return name.equals(stopName);
+        StopName stopName = (StopName) o;
+        return name == stopName.name;
     }
 
     @Override

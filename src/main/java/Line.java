@@ -8,12 +8,16 @@ public class Line {
     private Vector<Time> startingTimes; //Kedy odchadzaju busy z 1. zastavky
     private StopName firstStop;
 
-    ArrayList<LineSegment> lineSegments;
+    private ArrayList<LineSegment> lineSegments;
 
-    public Line(LineName name) {
+    public Line(LineName name, Vector<Time> startingTimes, ArrayList<LineSegment> lineSegments) {
         this.name = new LineName(name);
-        startingTimes = new Vector<>();
-        lineSegments = new ArrayList<>();
+        this.startingTimes = startingTimes;
+        this.lineSegments = lineSegments;
+    }
+
+    public LineName getLineName(){
+        return name;
     }
 
     public Line(String s) {

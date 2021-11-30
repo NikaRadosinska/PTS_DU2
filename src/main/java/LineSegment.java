@@ -16,11 +16,11 @@ public class LineSegment {
     }
 
     public Pair<StopName, Time> nextStop(Time startTime){
-        return new Pair<>(nextStop.getName(), new Time(startTime.time + timeToNextStop.timeDiff));
+        return new Pair<>(nextStop.getStopName(), new Time(startTime.time + timeToNextStop.timeDiff));
     }
 
     public Triplet<Time, StopName, Boolean> nextStopAndUpdateReachable(Time startTime){
-        Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.time + timeToNextStop.timeDiff),nextStop.getName(),numberOfPassengers.get(startTime) < capacity) ;
+        Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.time + timeToNextStop.timeDiff),nextStop.getStopName(),numberOfPassengers.get(startTime) < capacity) ;
         if (res.getValue2()){
             nextStop.updateReachableAt(startTime, Optional.ofNullable(name));
         }

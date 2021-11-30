@@ -15,8 +15,8 @@ public class TimeDiff {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        int timeDiff1 = (Integer) o;
-        return timeDiff == timeDiff1;
+        TimeDiff timeDiff1 = (TimeDiff) o;
+        return timeDiff == timeDiff1.timeDiff;
     }
 
     @Override

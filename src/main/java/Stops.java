@@ -2,24 +2,20 @@ import java.util.*;
 import org.javatuples.*;
 public class Stops {
 
+    private StopsStore stopsStore;
     private ArrayList<Stop> stops;
-    private Stop startingStop;
 
-    public Stops(){
-        stops = new ArrayList<>();
-        startingStop = new Stop("");
+    public Stops(StopsStore stopsStore){
+        this.stops = new ArrayList<>();
+        this.stopsStore = new StopsStore();
     }
 
     public Optional<Pair<StopName,Time>> earliestReachableStopAfter(Time time){
-        return Optional.of(new Pair<StopName, Time>(startingStop.getName(), startingStop.getReachableAt().getValue1()));
+
     }
 
     public boolean setStartingStop(StopName stop, Time time){
-        if (!stops.contains(new Stop(stop))){
-            stops.add(new Stop(stop));
-        }
-
-        startingStop = getStopByName(stop);
+        Stop startingStop = getStopByName(stop);
         startingStop.updateReachableAt(time, Optional.empty());
         return true;
     }
@@ -29,15 +25,17 @@ public class Stops {
     }
 
     public Pair<LineName, Time> getReachableAt(StopName stop){
-
+        return getStopByName(stop).getReachableAt();
     }
 
-    private Stop getStopByName(StopName stop){
+    private Stop getStopByName(StopName stopName){
         for (Stop s: stops) {
-            if (s.equals(new Stop(stop))){
+            if (s.getStopName().equals(stopName)){
                 return s;
             }
         }
-        return new Stop("");
+        Stop retStop = stopsStore.getStopByName(stopName);
+        stops.add(retStop);
+        return retStop;
     }
 }
