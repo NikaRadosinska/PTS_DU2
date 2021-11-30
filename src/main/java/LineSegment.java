@@ -1,3 +1,6 @@
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
+
 import java.util.*;
 
 public class LineSegment {
@@ -12,20 +15,15 @@ public class LineSegment {
         this.nextStop = nextStop;
     }
 
-    public StopNameAndTime nextStop(Time startTime){
-        StopNameAndTime res = new StopNameAndTime();
-        res.stopName = nextStop.getName();
-        res.time = new Time(startTime.time + timeToNextStop.timeDiff);
-        return res;
+    public Pair<StopName, Time> nextStop(Time startTime){
+        return new Pair<>(nextStop.getName(), new Time(startTime.time + timeToNextStop.timeDiff));
     }
 
-    public TimeStopNameAndBool nextStopAndUpdateReachable(Time startTime){
-        TimeStopNameAndBool res = new TimeStopNameAndBool();
-        res.time = new Time(startTime.time + timeToNextStop.timeDiff);
-        res.stopName = nextStop.getName();
-        updateNumberOfPassengers(startTime);
-        res.bool = numberOfPassengers.get(startTime) < capacity;
-        nextStop.updateReachableAt(startTime, Optional.ofNullable(name));
+    public Triplet<Time, StopName, Boolean> nextStopAndUpdateReachable(Time startTime){
+        Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.time + timeToNextStop.timeDiff),nextStop.getName(),numberOfPassengers.get(startTime) < capacity) ;
+        if (res.getValue2()){
+            nextStop.updateReachableAt(startTime, Optional.ofNullable(name));
+        }
         return res;
     }
 

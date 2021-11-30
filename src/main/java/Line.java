@@ -1,5 +1,8 @@
 import java.util.*;
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
+//Linka ako napr 83
 public class Line {
     private LineName name;
     private Vector<Time> startingTimes; //Kedy odchadzaju busy z 1. zastavky
@@ -19,9 +22,10 @@ public class Line {
 
     public void updateReachable(StopName stop, Time time){
         if (firstStop != stop){
-            StopNameAndTime snt = lineSegments.get(0).nextStop(new Time(10));
-            TimeStopNameAndBool tsnb = lineSegments.get(1).nextStopAndUpdateReachable(snt.time);
-            // TODO tu pokracovat s krokom cislo 20
+            Pair<StopName, Time> pairStopNameAndTime = lineSegments.get(0).nextStop(new Time(10));
+            Triplet<Time, StopName, Boolean> tripletTimeStopNameBool = lineSegments.get(1).nextStopAndUpdateReachable(pairStopNameAndTime.getValue1());
+            //TODO no more line segment find out
+            //TODO line1 tries if a bus that starts earlier could be used, but finds out there is no such bus and returns
         }
     }
 
