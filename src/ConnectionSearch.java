@@ -5,9 +5,6 @@ public class ConnectionSearch {
     private Lines lines;
     private Stops stops;
 
-    public ConnectionSearch(){
-        lines = new Lines();
-        stops = new Stops();
     }
 
     public ConnectionData search(StopName from, StopName to, Time time){
