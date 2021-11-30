@@ -13,7 +13,10 @@ public class Lines{
             if (!this.lines.contains(new Line(l)))
                 this.lines.add(new Line(l));
         }
-        this.lines.get(0).updateReachable(stop, time);
+        for (Line l:this.lines) {
+            l.updateReachable(stop, time);
+        }
+
     }
 
     public StopName updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time){

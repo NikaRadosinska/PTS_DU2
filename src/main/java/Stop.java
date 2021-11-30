@@ -1,6 +1,5 @@
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.*;
+import org.javatuples.*;
 
 public class Stop {
     private StopName name;
@@ -23,10 +22,9 @@ public class Stop {
     public void updateReachableAt(Time time, Optional<LineName> line){
         reachableAt = Optional.of(new Time(time));
         line.ifPresent(lineName -> lines.add(lineName));
-
     }
 
-    public LineNameAndTime getReachableAt() {
+    public Pair<LineName, Time> getReachableAt() {
 
     }
 

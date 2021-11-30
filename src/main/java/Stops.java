@@ -1,5 +1,5 @@
 import java.util.*;
-
+import org.javatuples.*;
 public class Stops {
 
     private ArrayList<Stop> stops;
@@ -10,8 +10,8 @@ public class Stops {
         startingStop = new Stop("");
     }
 
-    public Optional<StopNameAndTime> earliestReachableStopAfter(Time time){
-
+    public Optional<Pair<StopName,Time>> earliestReachableStopAfter(Time time){
+        return Optional.of(new Pair<StopName, Time>(startingStop.getName(), startingStop.getReachableAt().getValue1()));
     }
 
     public boolean setStartingStop(StopName stop, Time time){
@@ -28,7 +28,7 @@ public class Stops {
         return getStopByName(stop).getLines();
     }
 
-    public LineNameAndTime getReachableAt(StopName stop){
+    public Pair<LineName, Time> getReachableAt(StopName stop){
 
     }
 
