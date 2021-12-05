@@ -26,7 +26,7 @@ public class Stop {
     }
 
     public Pair<LineName, Time> getReachableAt() {
-
+        return new Pair<>(reachableVia.orElse(null), reachableAt.orElse(null));
     }
 
     public Vector<LineName> getLines() {

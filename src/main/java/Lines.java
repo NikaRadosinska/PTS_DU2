@@ -17,7 +17,7 @@ public class Lines{
     }
 
     public StopName updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time){
-
+        return getLineByName(line).updateCapacityAndGetPreviousStop(stop, time);
     }
 
     private Line getLineByName(LineName lineName){

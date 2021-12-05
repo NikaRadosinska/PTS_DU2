@@ -7,6 +7,10 @@ public class LinesStore {
 
     }
 
+    public LineSegment getLineSegment(LineName lineName, int index){
+
+    }
+
     public Line getLineByName(LineName lineName){
         for (Line l : allLines){
             if (l.getLineName().equals(lineName))

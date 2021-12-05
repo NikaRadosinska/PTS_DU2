@@ -7,7 +7,7 @@ public class LineSegment {
     private TimeDiff timeToNextStop;
     private Map<Time, Integer> numberOfPassengers;
     private int capacity;
-    private LineName name;
+    private LineName lineName;
 
     private Stop nextStop;
 
@@ -16,13 +16,13 @@ public class LineSegment {
     }
 
     public Pair<StopName, Time> nextStop(Time startTime){
-        return new Pair<>(nextStop.getStopName(), new Time(startTime.time + timeToNextStop.timeDiff));
+        return new Pair<>(nextStop.getStopName(), new Time(startTime.getTime() + timeToNextStop.getTime()));
     }
 
     public Triplet<Time, StopName, Boolean> nextStopAndUpdateReachable(Time startTime){
-        Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.time + timeToNextStop.timeDiff),nextStop.getStopName(),numberOfPassengers.get(startTime) < capacity) ;
+        Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.getTime() + timeToNextStop.getTime()),nextStop.getStopName(),numberOfPassengers.get(startTime) < capacity && controlNextStopReachable(startTime)) ;
         if (res.getValue2()){
-            nextStop.updateReachableAt(startTime, Optional.ofNullable(name));
+            nextStop.updateReachableAt(res.getValue0(), Optional.ofNullable(lineName));
         }
         return res;
     }
@@ -36,5 +36,10 @@ public class LineSegment {
         if (!numberOfPassengers.containsKey(key)){
             numberOfPassengers.put(key, 0);
         }
+    }
+
+    private boolean controlNextStopReachable(Time time){
+        Pair<LineName, Time> reachableAt = nextStop.getReachableAt();
+        return reachableAt.getValue1() != null && (reachableAt.getValue1().getTime() <= time.getTime());
     }
 }

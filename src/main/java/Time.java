@@ -1,13 +1,21 @@
 import java.util.Objects;
 
 public class Time {
-    public int time;
+    private int time;
 
     public Time(Time time){
         this.time = time.time;
     }
 
     public Time(int time){
+        this.time = time;
+    }
+
+    public int getTime(){
+        return time;
+    }
+
+    public void setTime(int time){
         this.time = time;
     }
 
