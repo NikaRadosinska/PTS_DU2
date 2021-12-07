@@ -31,7 +31,8 @@ public class Line {
             for (Time startingTime:startingTimes) {
                 if (time.getTime() <= startingTime.getTime()){
                     fromTime = startingTime;
-                    break;
+                    updateReachableInStops(fromTime, 0);
+                    return;
                 }
             }
         }
@@ -53,7 +54,8 @@ public class Line {
             for (Time startingTime:startingTimes) {
                 if (time.getTime() <= startingTime.getTime() + timeFromFirstStopToFromStopName.getTime()){
                     fromTime = new Time(startingTime.getTime() + timeFromFirstStopToFromStopName.getTime());
-                    break;
+                    updateReachableInStops(fromTime, numOfSeg - 1);
+                    return;
                 }
             }
         }
@@ -70,7 +72,7 @@ public class Line {
     }
 
     public StopName updateCapacityAndGetPreviousStop(StopName stop, Time time){
-        
+
     }
 
     private LineSegment getLineSegment(int index){

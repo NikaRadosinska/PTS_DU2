@@ -10,8 +10,28 @@ public class Stops {
         this.stopsStore = new StopsStore();
     }
 
-    public Optional<Pair<StopName,Time>> earliestReachableStopAfter(Time time){
-
+    public Optional<Vector<Pair<StopName,Time>>> earliestReachableStopAfter(Time time){
+        Optional<Vector<Pair<StopName,Time>>> res = Optional.of(new Vector<>());
+        for (Stop stop: stops) {
+            Pair<LineName, Time> stopInfo = stop.getReachableAt();
+            if (stopInfo.getValue1().getTime() > time.getTime())
+                res.get().add(new Pair<>(stop.getStopName(), stopInfo.getValue1()));
+        }
+        if (res.get().size() == 0)
+            return Optional.empty();
+        else{
+            res.get().sort(new Comparator<Pair<StopName, Time>>() {
+                @Override
+                public int compare(Pair<StopName, Time> o1, Pair<StopName, Time> o2) {
+                    if (o1.getValue1().getTime() < o2.getValue1().getTime())
+                        return -1;
+                    else if (o1.getValue1().getTime() > o2.getValue1().getTime())
+                        return 1;
+                    else return 0;
+                }
+            });
+            return res;
+        }
     }
 
     public boolean setStartingStop(StopName stop, Time time){
