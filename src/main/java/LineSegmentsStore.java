@@ -3,6 +3,7 @@ import org.javatuples.Triplet;
 import java.util.*;
 
 public class LineSegmentsStore {
+    ///////////////timeDiff, numberOfPassengers, capacity, stopName
     Vector<Quartet<Integer, Map<Integer,Integer>, Integer, String>> linesSegmentsInfo;
     Stops stops;
 
@@ -12,6 +13,8 @@ public class LineSegmentsStore {
     }
 
     public LineSegment getLineSegment(LineName lineName, int index){
+        if(index >= linesSegmentsInfo.size())
+            return null;
         TimeDiff timeToNextStop = new TimeDiff(linesSegmentsInfo.get(index).getValue0());
         HashMap<Time, Integer> numberOfPassengers = new HashMap<>();
         for (Map.Entry<Integer, Integer> entry :linesSegmentsInfo.get(index).getValue1().entrySet()) {

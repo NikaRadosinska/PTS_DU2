@@ -10,6 +10,8 @@ public class Stop {
     public Stop(StopName name, Vector<LineName> lines){
         this.name = new StopName(name);
         this.lines = lines;
+        reachableVia = Optional.empty();
+        reachableAt = Optional.empty();
     }
 
     public Stop(String name, Vector<LineName> lines){

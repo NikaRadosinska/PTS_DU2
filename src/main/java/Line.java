@@ -18,6 +18,7 @@ public class Line {
         this.startingTimes = startingTimes;
         this.firstStop = firstStop;
         this.lineSegmentsStore = lineSegmentsStore;
+        lineSegments = new ArrayList<>();
     }
 
     public LineName getLineName(){
@@ -39,14 +40,16 @@ public class Line {
         else {
             TimeDiff timeFromFirstStopToFromStopName = new TimeDiff(0);
             boolean foundStop = false;
-            for (LineSegment ls : lineSegments){
-                numOfSeg++;
+            LineSegment ls = getLineSegment(0);
+            while (ls != null){
                 Pair<StopName, Time> nextStopAndTime = ls.nextStop(timeFromFirstStopToFromStopName);
-                timeFromFirstStopToFromStopName.setTime(timeFromFirstStopToFromStopName.getTime() + nextStopAndTime.getValue1().getTime());
+                timeFromFirstStopToFromStopName.setTime(nextStopAndTime.getValue1().getTime());
                 if (nextStopAndTime.getValue0().equals(fromStopName)){
                     foundStop = true;
                     break;
                 }
+                numOfSeg++;
+                ls = getLineSegment(numOfSeg);
             }
             if (!foundStop){
                 throw new StopNotFoundInLineException();
@@ -54,7 +57,7 @@ public class Line {
             for (Time startingTime:startingTimes) {
                 if (time.getTime() <= startingTime.getTime() + timeFromFirstStopToFromStopName.getTime()){
                     fromTime = new Time(startingTime.getTime() + timeFromFirstStopToFromStopName.getTime());
-                    updateReachableInStops(fromTime, numOfSeg - 1);
+                    updateReachableInStops(fromTime, numOfSeg + 1);
                     return;
                 }
             }
@@ -75,10 +78,10 @@ public class Line {
         if (stop.equals(firstStop))
             return null;
         for (int i = 0; i < lineSegments.size(); i++) {
-            LineSegment lineSegment = lineSegments.get(i);
+            LineSegment lineSegment = getLineSegment(i);
             if(lineSegment.nextStop(time).getValue0().equals(stop)){
                 lineSegment.incrementCapacity(time);
-                return (i == 0) ? (firstStop) : (lineSegments.get(i-1).nextStop(new Time(0)).getValue0());
+                return (i == 0) ? (firstStop) : (getLineSegment(i-1).nextStop(new Time(0)).getValue0());
             }
         }
         throw new NoSuchStopNameException();
@@ -87,7 +90,10 @@ public class Line {
     private LineSegment getLineSegment(int index){
         if (lineSegments.size() <= index){
             for (int i = lineSegments.size(); i <= index; i++){
-                lineSegments.add(lineSegmentsStore.getLineSegment(name, i));
+                LineSegment newLineSegment = lineSegmentsStore.getLineSegment(name, i);
+                if (newLineSegment == null)
+                    return null;
+                lineSegments.add(newLineSegment);
             }
         }
         return lineSegments.get(index);

@@ -24,6 +24,7 @@ public class LineSegment {
     }
 
     public Triplet<Time, StopName, Boolean> nextStopAndUpdateReachable(Time startTime){
+        updateNumberOfPassengers(startTime);
         Triplet<Time, StopName, Boolean> res = new Triplet<>(new Time(startTime.getTime() + timeToNextStop.getTime()),nextStop.getStopName(),numberOfPassengers.get(startTime) < capacity && controlNextStopReachable(startTime)) ;
         if (res.getValue2()){
             nextStop.updateReachableAt(res.getValue0(), Optional.ofNullable(lineName));
@@ -31,7 +32,8 @@ public class LineSegment {
         return res;
     }
 
-    public void incrementCapacity(Time startTime){
+    public void incrementCapacity(Time time){
+        Time startTime = new Time(time.getTime() - timeToNextStop.getTime());
         updateNumberOfPassengers(startTime);
         numberOfPassengers.put(startTime, numberOfPassengers.get(startTime) + 1);
     }
@@ -44,6 +46,6 @@ public class LineSegment {
 
     private boolean controlNextStopReachable(Time time){
         Pair<LineName, Time> reachableAt = nextStop.getReachableAt();
-        return reachableAt.getValue1() != null && (reachableAt.getValue1().getTime() <= time.getTime());
+        return reachableAt.getValue1() == null || (reachableAt.getValue1().getTime() > time.getTime());
     }
 }

@@ -22,8 +22,8 @@ public class LineName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        String stopName = (String) o;
-        return name.equals(stopName);
+        LineName stopName = (LineName) o;
+        return name.equals(stopName.getName());
     }
 
     @Override

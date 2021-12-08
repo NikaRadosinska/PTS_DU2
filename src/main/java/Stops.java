@@ -14,6 +14,8 @@ public class Stops {
         Optional<Vector<Pair<StopName,Time>>> res = Optional.of(new Vector<>());
         for (Stop stop: stops) {
             Pair<LineName, Time> stopInfo = stop.getReachableAt();
+            if (stopInfo.getValue1() == null)
+                continue;
             if (stopInfo.getValue1().getTime() > time.getTime())
                 res.get().add(new Pair<>(stop.getStopName(), stopInfo.getValue1()));
         }
@@ -57,5 +59,9 @@ public class Stops {
         Stop retStop = stopsStore.getStopByName(stopName);
         stops.add(retStop);
         return retStop;
+    }
+
+    public void clear(){
+        stops = new ArrayList<>();
     }
 }
