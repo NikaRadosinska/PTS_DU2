@@ -1,17 +1,23 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class StopsStore {
-    ArrayList<Stop> allStops;
+    HashMap<String, Vector<String>> allStops;
 
-    public StopsStore(){
-
+    public StopsStore(HashMap<String, Vector<String>> allStops){
+        this.allStops = allStops;
     }
 
     public Stop getStopByName(StopName stopName){
-        for (Stop s : allStops){
-            if (s.getStopName().equals(stopName))
-                return s;
+        String stopNameString = stopName.getName();
+
+        if (!allStops.containsKey(stopNameString))
+            throw new NoSuchStopNameException();
+
+        Vector<LineName> lineNames = new Vector<>();
+        for (String lineName : allStops.get(stopNameString)) {
+            lineNames.add(new LineName(lineName));
         }
-        throw new NoSuchStopNameException();
+        return new Stop(stopName, lineNames);
+
     }
 }

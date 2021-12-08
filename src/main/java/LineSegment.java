@@ -11,8 +11,12 @@ public class LineSegment {
 
     private Stop nextStop;
 
-    public LineSegment(Stop nextStop){
+    public LineSegment(Stop nextStop, TimeDiff timeToNextStop, Map<Time, Integer> numberOfPassengers, int capacity, LineName lineName){
         this.nextStop = nextStop;
+        this.timeToNextStop = timeToNextStop;
+        this. numberOfPassengers = numberOfPassengers;
+        this.capacity = capacity;
+        this.lineName = lineName;
     }
 
     public Pair<StopName, Time> nextStop(Time startTime){

@@ -11,13 +11,13 @@ public class Line {
     private StopName firstStop;
     private ArrayList<LineSegment> lineSegments;
 
-    private LinesStore linesStore;
+    private LineSegmentsStore lineSegmentsStore;
 
-    public Line(LineName name, StopName firstStop,Vector<Time> startingTimes, LinesStore linesStore) {
+    public Line(LineName name, StopName firstStop,Vector<Time> startingTimes, LineSegmentsStore lineSegmentsStore) {
         this.name = new LineName(name);
         this.startingTimes = startingTimes;
         this.firstStop = firstStop;
-        this.linesStore = linesStore;
+        this.lineSegmentsStore = lineSegmentsStore;
     }
 
     public LineName getLineName(){
@@ -72,13 +72,22 @@ public class Line {
     }
 
     public StopName updateCapacityAndGetPreviousStop(StopName stop, Time time){
-
+        if (stop.equals(firstStop))
+            return null;
+        for (int i = 0; i < lineSegments.size(); i++) {
+            LineSegment lineSegment = lineSegments.get(i);
+            if(lineSegment.nextStop(time).getValue0().equals(stop)){
+                lineSegment.incrementCapacity(time);
+                return (i == 0) ? (firstStop) : (lineSegments.get(i-1).nextStop(new Time(0)).getValue0());
+            }
+        }
+        throw new NoSuchStopNameException();
     }
 
     private LineSegment getLineSegment(int index){
         if (lineSegments.size() <= index){
             for (int i = lineSegments.size(); i <= index; i++){
-                lineSegments.add(linesStore.getLineSegment(name, i));
+                lineSegments.add(lineSegmentsStore.getLineSegment(name, i));
             }
         }
         return lineSegments.get(index);

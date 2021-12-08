@@ -1,13 +1,21 @@
 import java.util.Objects;
 
 public class LineName {
-    public String name;
+    private String name;
 
     public LineName(String name){
         this.name = name;
     }
     public LineName(LineName lineName){
         this.name = lineName.name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     @Override

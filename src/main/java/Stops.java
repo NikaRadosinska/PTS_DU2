@@ -7,7 +7,7 @@ public class Stops {
 
     public Stops(StopsStore stopsStore){
         this.stops = new ArrayList<>();
-        this.stopsStore = new StopsStore();
+        this.stopsStore = stopsStore;
     }
 
     public Optional<Vector<Pair<StopName,Time>>> earliestReachableStopAfter(Time time){
@@ -48,7 +48,7 @@ public class Stops {
         return getStopByName(stop).getReachableAt();
     }
 
-    private Stop getStopByName(StopName stopName){
+    public Stop getStopByName(StopName stopName){
         for (Stop s: stops) {
             if (s.getStopName().equals(stopName)){
                 return s;
