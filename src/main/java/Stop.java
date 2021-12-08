@@ -22,7 +22,7 @@ public class Stop {
 
     public void updateReachableAt(Time time, Optional<LineName> line){
         reachableAt = Optional.of(new Time(time));
-        line.ifPresent(lineName -> lines.add(lineName));
+        reachableVia = line;
     }
 
     public Pair<LineName, Time> getReachableAt() {
