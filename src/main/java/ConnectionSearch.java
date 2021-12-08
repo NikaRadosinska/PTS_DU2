@@ -20,6 +20,7 @@ public class ConnectionSearch {
         subSearch(from, to ,time);
         if (connectionData == null)
             throw new NoSuchWayException();
+        clear();
         return connectionData;
     }
 
@@ -51,8 +52,9 @@ public class ConnectionSearch {
         }
     }
 
+    public void clear(){
 
-
+    }
 
     ArrayList<Time> timesAtStopsTheWay;
     ArrayList<StopName> stopNamesTheWay;
